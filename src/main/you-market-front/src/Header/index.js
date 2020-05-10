@@ -1,56 +1,54 @@
-import React, { useState,useCallback, useEffect } from 'react';
-import './styles.css';
-import logo from '../logo.png';
-import carro from './shopping-cart.svg';
-import menu from './menu.svg';
-import {Link, NavLink} from 'react-router-dom';
-import user from './user.svg';
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import logo from "../logo.png";
+import menu from "./menu.svg";
+import carro from "./shopping-cart.svg";
+import "./styles.css";
+import user from "./user.svg";
 
 window.onresize = hideMenuLinks;
 
 function hideMenuLinks() {
-	var width = window.innerWidth;
-	var x = document.getElementById("menuLinks");
-	if(width > 580){
-		x.style.display = "none";
-	}
+  var width = window.innerWidth;
+  var x = document.getElementById("menuLinks");
+  if (width > 580) {
+    x.style.display = "none";
+  }
 }
 
 function menuInteraction() {
-	  var x = document.getElementById("menuLinks");
-	  if (x.style.display === "flex") {
-		    x.style.display = "none";
-	  } else {
-		    x.style.display = "flex";
-	  }
-	  return false;
-};
-
-function closeMenu() {
-	var x = document.getElementById("menuLinks");
-	x.style.display = "none";
+  var x = document.getElementById("menuLinks");
+  if (x.style.display === "flex") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "flex";
+  }
+  return false;
 }
 
+function closeMenu() {
+  var x = document.getElementById("menuLinks");
+  x.style.display = "none";
+}
 
 function Header() {
-	const [login, setLogin]=useState('');
-	const [loginEsp, setLoginEsp]=useState('');
+  const [login, setLogin] = useState("");
+  const [loginEsp, setLoginEsp] = useState("");
 
-	const loginCheck = useCallback(() => {
-		if(localStorage.getItem('auth')!=null){
-			setLogin('/logout');
-			setLoginEsp('Salir');
-		}else{
-			setLogin('/login');
-			setLoginEsp('Iniciar Sesión');
-	      }
-		return login;
-	  }, []);
+  const loginCheck = useCallback(() => {
+    if (localStorage.getItem("auth") != null) {
+      setLogin("/logout");
+      setLoginEsp("Salir");
+    } else {
+      setLogin("/login");
+      setLoginEsp("Iniciar Sesión");
+    }
+    return login;
+  }, []);
 
-	  useEffect(() => {
-		    loginCheck();
-		  }, [loginCheck]);
-
+  useEffect(() => {
+    loginCheck();
+  }, [loginCheck]);
 
 	return(
 		<div>
