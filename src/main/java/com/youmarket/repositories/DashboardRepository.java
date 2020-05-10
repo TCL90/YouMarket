@@ -32,15 +32,6 @@ public interface DashboardRepository extends JpaRepository<Usuario, Integer>{
 	
 	@Query("select 1.0 * count(u) / (select count(u1) from Usuario u1) from Usuario u where u.id in (select p.usuario.id from Pedido p)")
 	public Double numUsuariosConPedidosVsTotal();
-
-	@Query("select avg(1.0*(select sum(cp.cantidad) from CestaProducto cp where cp.cesta.id = p.id group by cp.cesta.id)) from Pedido p")
-	public Double avgArticulosPerPedido();
-	
-	@Query("select max(select sum(cp.cantidad) from CestaProducto cp where cp.cesta.id = p.id group by cp.cesta.id) from Pedido p")
-	public Integer maxArticulosPerPedido();
-	
-	@Query("select min(select sum(cp.cantidad) from CestaProducto cp where cp.cesta.id = p.id group by cp.cesta.id) from Pedido p")
-	public Integer minArticulosPerPedido();
 	
 	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id != 2 and u.suscripcion.id != 4 and u.suscripcion.id != 6 and u.suscripcion.id != 8")
 	public Double ratioUsuariosConNoDietvsDiet();
@@ -84,7 +75,19 @@ public interface DashboardRepository extends JpaRepository<Usuario, Integer>{
 	@Query("select p.horaEnvioIni from Pedido p group by p.horaEnvioIni order by count(p.horaEnvioIni) desc")
 	public Collection<Integer> horaEnvioIniFrec();
 	
-	@Query("select DAYNAME(p.fechaEnvio) as WeekDay FROM Pedido p GROUP BY DAYNAME(p.fechaEnvio) ORDER BY COUNT(p.fechaEnvio) DESC")
+	@Query("select DAYNAME(f.fechaFactura) as WeekDay FROM Factura f where f.pedido.id is not null GROUP BY DAYNAME(f.fechaFactura) ORDER BY COUNT(f.fechaFactura) DESC")
 	public Collection<String> diaSemanaSeCompraMas();
+	
+	@Query("select DAYNAME(p.fechaEnvio) as WeekDay FROM Pedido p GROUP BY DAYNAME(p.fechaEnvio) ORDER BY COUNT(p.fechaEnvio) DESC")
+	public Collection<String> diaSemanaSeEnviaMas();
+	
+	@Query("select avg(f.totalIva) from Factura f where f.pedido is not null")
+	public Double avgGastoPerPedido();
 
+	@Query("select count(f) from Factura f where f.pedido is not null and f.fechaFactura between ?1 AND ?2")
+	public Integer numPedidosUltimoMes(Date start, Date end);
+	
+	@Query("select count(f) from Factura f where f.pedido is null and f.fechaFactura between ?1 AND ?2")
+	public Integer numSusUltimoMes(Date start, Date end);
+	
 }

@@ -28,33 +28,37 @@ public class DashboardController {
 	@GetMapping
     public ResponseEntity<Object> dashboard(@CurrentUser UserPrincipal currentUser) {
 		List<Object> dashboard = new ArrayList<>();
-		
+		if(this.dashboardService.checkAdmin(currentUser)) {
 
-		dashboard.add(this.dashboardService.avgCestasPerClient(currentUser));
-		dashboard.add(this.dashboardService.numUsuarios(currentUser));
-		dashboard.add(this.dashboardService.avgPedidosPerClient(currentUser));
-		dashboard.add(this.dashboardService.numPedidosTotales(currentUser));
-		dashboard.add(this.dashboardService.numPedidosUltimaSemana(currentUser));
-		dashboard.add(this.dashboardService.numUsuariosConPedidos(currentUser));
-		dashboard.add(this.dashboardService.numUsuariosConPedidosVsTotal(currentUser));
-		dashboard.add(this.dashboardService.avgArticulosPerPedido(currentUser));
-		dashboard.add(this.dashboardService.minArticulosPerPedido(currentUser));
-		dashboard.add(this.dashboardService.maxArticulosPerPedido(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuariosConDietvsNoDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuariosSinDietvsConDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios1EnvioSinDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios1EnvioConDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios2EnvioSinDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios2EnvioConDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios3EnvioSinDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios3EnvioConDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios4EnvioSinDiet(currentUser));
-		dashboard.add(this.dashboardService.ratioUsuarios4EnvioConDiet(currentUser));
-		dashboard.add(this.dashboardService.suscripcionesCobradas(currentUser));
-		dashboard.add(this.dashboardService.usuariosSuscritosVsNo(currentUser));
-		dashboard.add(this.dashboardService.superMasVentas(currentUser));
-		dashboard.add(this.dashboardService.horaEnvioIniFrec(currentUser));
-		dashboard.add(this.dashboardService.diaSemanaSeCompraMas(currentUser));
+		dashboard.add(this.dashboardService.avgCestasPerClient());
+		dashboard.add(this.dashboardService.numUsuarios());
+		dashboard.add(this.dashboardService.avgPedidosPerClient());
+		dashboard.add(this.dashboardService.numPedidosTotales());
+		dashboard.add(this.dashboardService.numPedidosUltimaSemana());
+		dashboard.add(this.dashboardService.numUsuariosConPedidos());
+		dashboard.add(this.dashboardService.numUsuariosConPedidosVsTotal());
+		dashboard.add(this.dashboardService.ratioUsuariosConDietvsNoDiet());
+		dashboard.add(this.dashboardService.ratioUsuariosSinDietvsConDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios1EnvioSinDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios1EnvioConDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios2EnvioSinDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios2EnvioConDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios3EnvioSinDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios3EnvioConDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios4EnvioSinDiet());
+		dashboard.add(this.dashboardService.ratioUsuarios4EnvioConDiet());
+		dashboard.add(this.dashboardService.suscripcionesCobradas());
+		dashboard.add(this.dashboardService.usuariosSuscritosVsNo());
+		dashboard.add(this.dashboardService.superMasVentas());
+		dashboard.add(this.dashboardService.horaEnvioIniFrec());
+		dashboard.add(this.dashboardService.diaSemanaSeCompraMas());
+		dashboard.add(this.dashboardService.diaSemanaSeEnviaMas());
+		dashboard.add(this.dashboardService.avgGastoPerPedido());
+		dashboard.add(this.dashboardService.numPedidosUltimoMes());
+		dashboard.add(this.dashboardService.numSusUltimoMes());
+		}else {
+			dashboard = new ArrayList<>();
+		}
 		
 		return ResponseEntity.ok(dashboard);
 		

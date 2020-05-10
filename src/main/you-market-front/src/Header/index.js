@@ -60,7 +60,9 @@ function Header() {
 			</NavLink>
 			<div className="header-links">
 				{localStorage.getItem('adminCheck')==1 ?
-				(<Link to="/brecha" className="header-link" >Notificar brecha</Link>):<div></div>}
+						(<Link to="/brecha" className="header-link" >Notificar brecha</Link>):<div></div>}
+				{localStorage.getItem('adminCheck')==1 ?
+						(<Link to="/dashboard" className="header-link" >Dashboard</Link>):<div></div>}
 				<Link to="/precios" className="header-link" >Precios</Link>
 				<Link to="/productos" className="header-link" >Productos</Link>
 				{localStorage.getItem('dietasCheck')==1 ?
@@ -86,6 +88,8 @@ function Header() {
 		<div id="menuLinks">
 			{localStorage.getItem('adminCheck')==1 ?
 			<Link to="/brecha" className="menuLink" >Notificar brecha</Link>:<div></div>}
+			{localStorage.getItem('adminCheck')==1 ?
+					(<Link to="/dashboard" className="menuLink" >Dashboard</Link>):<div></div>}
 			<Link to="/precios" className="menuLink" onClick={closeMenu}>Precios</Link>
 			<Link to="/productos" className="menuLink" onClick={closeMenu}>Productos</Link>
 			{localStorage.getItem('dietasCheck')==1 ?

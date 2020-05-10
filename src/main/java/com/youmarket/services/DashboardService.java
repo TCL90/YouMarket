@@ -13,7 +13,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itextpdf.text.log.SysoCounter;
 import com.youmarket.configuration.security.UserPrincipal;
 import com.youmarket.domain.Role;
 import com.youmarket.domain.Usuario;
@@ -29,8 +28,9 @@ public class DashboardService {
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	public Boolean chechAdmin(UserPrincipal currentUser) {
+	public Boolean checkAdmin(UserPrincipal currentUser) {
 		Usuario currUser = null;
+		boolean isAdmin=false;
 		
 		Optional<Usuario> user1 = this.usuarioService.findById(currentUser.getId());
 		if(user1.isPresent()) {
@@ -38,11 +38,11 @@ public class DashboardService {
 		}
 		
 		Set<Role> roleSet = currUser.getRoles();
-		boolean isAdmin = roleSet.contains(new Role((long) 4, RoleName.ADMIN));
+		isAdmin = roleSet.contains(new Role((long) 4, RoleName.ADMIN));
 		return isAdmin;
 	}
 	
-	public Double avgCestasPerClient(UserPrincipal currentUser) {
+	public Double avgCestasPerClient() {
 		Double res = null;
 		
 		res=this.dashboardRepository.avgCestasPerClient();
@@ -52,14 +52,14 @@ public class DashboardService {
 		
 	}
 	
-	public Integer numUsuarios(UserPrincipal currentUser) {
+	public Integer numUsuarios() {
 		Integer res=null;
 		res=this.dashboardRepository.numUsuarios();
 		
 		return res;
 	}
 	
-	public Double avgPedidosPerClient(UserPrincipal currentUser) {
+	public Double avgPedidosPerClient() {
 		Double res=null;
 
 		res=this.dashboardRepository.avgPedidosPerClient();
@@ -68,7 +68,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Integer numPedidosTotales(UserPrincipal currentUser) {
+	public Integer numPedidosTotales() {
 		Integer res=null;
 		
 		res=this.dashboardRepository.numPedidosTotales();
@@ -76,7 +76,7 @@ public class DashboardService {
 		return res;
 	}
 	
-	public Integer numPedidosUltimaSemana(UserPrincipal currentUser) {
+	public Integer numPedidosUltimaSemana() {
 		Integer res = null;
 		
 	    Date date = new Date();
@@ -93,7 +93,7 @@ public class DashboardService {
 		return res;	
 	}
 	
-	public Integer numUsuariosConPedidos(UserPrincipal currentUser) {
+	public Integer numUsuariosConPedidos() {
 		Integer res = null;
 
 		res=this.dashboardRepository.numUsuariosConPedidos();
@@ -101,7 +101,7 @@ public class DashboardService {
 		return res;		
 	}
 	
-	public Double numUsuariosConPedidosVsTotal(UserPrincipal currentUser) {
+	public Double numUsuariosConPedidosVsTotal() {
 		Double res = null;
 		res=this.dashboardRepository.numUsuariosConPedidosVsTotal();
 		
@@ -110,32 +110,7 @@ public class DashboardService {
 		
 	}
 	
-	public Double avgArticulosPerPedido(UserPrincipal currentUser) {
-		Double res = null;
-	
-		res=this.dashboardRepository.avgArticulosPerPedido();
-		BigDecimal bd = new BigDecimal(res).setScale(2, RoundingMode.HALF_UP);
-		
-		return bd.doubleValue();	
-	}
-	
-	public Integer maxArticulosPerPedido(UserPrincipal currentUser) {
-		Integer res = null;
-	
-		res=this.dashboardRepository.maxArticulosPerPedido();
-		System.out.println(res);
-		return res;	
-	}
-	
-	public Integer minArticulosPerPedido(UserPrincipal currentUser) {
-		Integer res = null;
-		
-		res=this.dashboardRepository.minArticulosPerPedido();
-		
-		return res;	
-	}
-	
-	public Double ratioUsuariosConDietvsNoDiet(UserPrincipal currentUser) {
+	public Double ratioUsuariosConDietvsNoDiet() {
 		Double res = null;
 
 		res=this.dashboardRepository.ratioUsuariosConDietvsNoDiet();
@@ -144,7 +119,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuariosSinDietvsConDiet(UserPrincipal currentUser) {
+	public Double ratioUsuariosSinDietvsConDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuariosConNoDietvsDiet();
@@ -153,7 +128,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios1EnvioSinDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios1EnvioSinDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios1EnvioSinDiet();
@@ -162,7 +137,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios1EnvioConDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios1EnvioConDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios1EnvioConDiet();
@@ -171,7 +146,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios2EnvioSinDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios2EnvioSinDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios2EnvioSinDiet();
@@ -180,7 +155,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios2EnvioConDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios2EnvioConDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios2EnvioConDiet();
@@ -189,7 +164,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios3EnvioSinDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios3EnvioSinDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios3EnvioSinDiet();
@@ -198,7 +173,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios3EnvioConDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios3EnvioConDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios3EnvioConDiet();
@@ -207,7 +182,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios4EnvioSinDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios4EnvioSinDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios4EnvioSinDiet();
@@ -216,7 +191,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Double ratioUsuarios4EnvioConDiet(UserPrincipal currentUser) {
+	public Double ratioUsuarios4EnvioConDiet() {
 		Double res = null;
 		
 		res=this.dashboardRepository.ratioUsuarios4EnvioConDiet();
@@ -225,7 +200,7 @@ public class DashboardService {
 		return bd.doubleValue();
 	}
 	
-	public Integer suscripcionesCobradas(UserPrincipal currentUser) {
+	public Integer suscripcionesCobradas() {
 		Integer res = null;
 		
 		res=this.dashboardRepository.suscripcionesCobradas();
@@ -233,7 +208,7 @@ public class DashboardService {
 		return res;
 	}
 	
-	public Integer usuariosSuscritosVsNo(UserPrincipal currentUser) {
+	public Integer usuariosSuscritosVsNo() {
 		Integer res = null;
 		
 		res=this.dashboardRepository.usuariosSuscritosVsNo();
@@ -241,7 +216,7 @@ public class DashboardService {
 		return res;
 	}
 	
-	public String superMasVentas(UserPrincipal currentUser) {
+	public String superMasVentas() {
 		List<String> res = null;
 		
 		res=new ArrayList<>(this.dashboardRepository.superMasVentas());
@@ -249,7 +224,7 @@ public class DashboardService {
 		return res.get(0);
 	}
 	
-	public String horaEnvioIniFrec(UserPrincipal currentUser) {
+	public String horaEnvioIniFrec() {
 		List<Integer> res = null;
 		String result = null;
 		
@@ -268,23 +243,109 @@ public class DashboardService {
 		
 	}
 	
-	public String diaSemanaSeCompraMas(UserPrincipal currentUser) {
+	public String traducDia(String diaSemana){
+		String result=null;
+		switch(diaSemana) {
+		  case "Monday":
+		    result = "Lunes";
+		    break;
+		  case "Tuesday":
+			  result = "Martes";
+		    break;
+		  case "Wednesday":
+			  result = "Miércoles";
+			    break;
+		  case "Thursday":
+			  result = "Jueves";
+			    break;
+		  case "Friday":
+			  result = "Viernes";
+			    break;
+		  case "Saturday":
+			  result = "Sábado";
+			    break;
+		  default:
+			  result = "Domingo";
+		}
+		return result;
+	}
+	
+	public String diaSemanaSeCompraMas() {
 		List<String> res = null;
 		String result = null;
 		
 		res = new ArrayList<>(this.dashboardRepository.diaSemanaSeCompraMas());
+
 		if(res.size()>=3) {
-			result = String.valueOf(res.get(0)) + ", " + String.valueOf(res.get(1)) + ", " + String.valueOf(res.get(2));
+			result = this.traducDia(String.valueOf(res.get(0))) + ", " + this.traducDia(String.valueOf(res.get(1))) + ", " + this.traducDia(String.valueOf(res.get(2)));
 			
 		}else if(res.size()==2) {
-			result = String.valueOf(res.get(0)) + ", " + String.valueOf(res.get(1));
+			result = this.traducDia(String.valueOf(res.get(0))) + ", " + this.traducDia(String.valueOf(res.get(1)));
 		}else if(res.size()==1) {
-			result = String.valueOf(res.get(0));
+			result = this.traducDia(String.valueOf(res.get(0)));
 		}else {
 			result = "No hay pedidos en la web aún";
 		}
 		return result;
 		
+	}
+	
+	public String diaSemanaSeEnviaMas() {
+		List<String> res = null;
+		String result = null;
+		
+		res = new ArrayList<>(this.dashboardRepository.diaSemanaSeEnviaMas());
+
+		if(res.size()>=3) {
+			result = this.traducDia(String.valueOf(res.get(0))) + ", " + this.traducDia(String.valueOf(res.get(1))) + ", " + this.traducDia(String.valueOf(res.get(2)));
+			
+		}else if(res.size()==2) {
+			result = this.traducDia(String.valueOf(res.get(0))) + ", " + this.traducDia(String.valueOf(res.get(1)));
+		}else if(res.size()==1) {
+			result = this.traducDia(String.valueOf(res.get(0)));
+		}else {
+			result = "No hay pedidos en la web aún";
+		}
+		return result;
+		
+	}
+	
+	public Double avgGastoPerPedido() {
+		Double res = null;
+		
+		res=this.dashboardRepository.avgGastoPerPedido();
+
+		BigDecimal bd = new BigDecimal(res).setScale(2, RoundingMode.HALF_UP);
+		
+		return bd.doubleValue();
+	}
+	
+	public Integer numPedidosUltimoMes() {
+		Integer res = null;
+		
+	    Calendar c = Calendar.getInstance();
+	    c.set(Calendar.DAY_OF_MONTH,1);
+	    Date start = c.getTime();
+	    c.set(Calendar.MONTH, c.get(Calendar.MONTH)+1);
+	    Date end = c.getTime();
+		
+		res=this.dashboardRepository.numPedidosUltimoMes(start, end);
+		
+		return res;	
+	}
+	
+	public Integer numSusUltimoMes() {
+		Integer res = null;
+		
+	    Calendar c = Calendar.getInstance();
+	    c.set(Calendar.DAY_OF_MONTH,1);
+	    Date start = c.getTime();
+	    c.set(Calendar.MONTH, c.get(Calendar.MONTH)+1);
+	    Date end = c.getTime();
+		
+		res=this.dashboardRepository.numSusUltimoMes(start, end);
+		
+		return res;	
 	}
 	
 }
