@@ -33,6 +33,7 @@ import Recetas from "./Recetas";
 import RegistroUsuario from "./Registro";
 import ShowCesta from "./ShowCesta";
 import TerminosYCondiciones from "./TerminosCondiciones";
+import Dashboard from './Dashboard';
 
 function App() {
   return (
@@ -138,6 +139,9 @@ function App() {
         <Route path="/brecha">
           <NotificarBrecha />
         </Route>
+				<Route path="/dashboard">
+					<Dashboard />
+				</Route>
 
         <Route path="/">
           <Inicio />
