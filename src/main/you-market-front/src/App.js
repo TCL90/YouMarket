@@ -41,6 +41,7 @@ import Receta from './Receta';
 import Precios from './Precios';
 import RecetaDetalle from './RecetaDetalle';
 import NotificarBrecha from './NotificarBrecha';
+import Dashboard from './Dashboard';
 
 
 function App() {
@@ -147,6 +148,9 @@ function App() {
 				</Route>
 				<Route path="/brecha">
 					<NotificarBrecha />
+				</Route>
+				<Route path="/dashboard">
+					<Dashboard />
 				</Route>
 			
 			
