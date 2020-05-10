@@ -12,13 +12,13 @@ import com.youmarket.domain.Usuario;
 @Repository
 public interface DashboardRepository extends JpaRepository<Usuario, Integer>{
 
-	@Query("select avg(1.0*(select count(c) from Cesta c where c not in (select p from Pedido p) and c.usuario.id = u.id group by c.usuario)) from Usuario u")
+	@Query("select avg(1.0*(select count(c) from Cesta c where c not in (select p from Pedido p) and c.usuario.id = u.id group by c.usuario)) from Usuario u where u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double avgCestasPerClient();
 
-	@Query("select count(u) from Usuario u")
+	@Query("select count(u) from Usuario u where u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Integer numUsuarios();
 	
-	@Query("select avg(1.0*(select count(f) from Factura f where f.usuario.id = u.id group by f.usuario)) from Usuario u")
+	@Query("select avg(1.0*(select count(f) from Factura f where f.usuario.id = u.id group by f.usuario)) from Usuario u where u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double avgPedidosPerClient();
 	
 	@Query("select count(f) from Factura f where f.pedido is not null")
@@ -27,46 +27,46 @@ public interface DashboardRepository extends JpaRepository<Usuario, Integer>{
 	@Query("select count(f) from Factura f where f.pedido is not null and f.fechaFactura between ?1 AND ?2")
 	public Integer numPedidosUltimaSemana(Date start, Date end);
 	
-	@Query("select count(u) from Usuario u where u.id in (select p.usuario.id from Pedido p)")
+	@Query("select count(u) from Usuario u where u.id in (select p.usuario.id from Pedido p) and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Integer numUsuariosConPedidos();
 	
-	@Query("select 1.0 * count(u) / (select count(u1) from Usuario u1) from Usuario u where u.id in (select p.usuario.id from Pedido p)")
+	@Query("select 1.0 * count(u) / (select count(u1) from Usuario u1) from Usuario u where u.id in (select p.usuario.id from Pedido p) and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double numUsuariosConPedidosVsTotal();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id != 2 and u.suscripcion.id != 4 and u.suscripcion.id != 6 and u.suscripcion.id != 8")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id != 2 and u.suscripcion.id != 4 and u.suscripcion.id != 6 and u.suscripcion.id != 8 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuariosConNoDietvsDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 2 or u.suscripcion.id = 4 or u.suscripcion.id = 6 or u.suscripcion.id = 8")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 2 or u.suscripcion.id = 4 or u.suscripcion.id = 6 or u.suscripcion.id = 8 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuariosConDietvsNoDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 1")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 1 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios1EnvioSinDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 2")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 2 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios1EnvioConDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 3")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 3 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios2EnvioSinDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 4")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 4 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios2EnvioConDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 5")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 5 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios3EnvioSinDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 6")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 6 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios3EnvioConDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 7")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 7 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios4EnvioSinDiet();
 	
-	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 8")
+	@Query("select 100.0 * count(u)/(select count(u1) from Usuario u1) from Usuario u where u.suscripcion.id = 8 and u.nombre!='Usuario' and u.apellidos!='Eliminado'")
 	public Double ratioUsuarios4EnvioConDiet();
 	
 	@Query("select count(f) from Factura f where f.suscripcion.id is not null")
 	public Integer suscripcionesCobradas();
 	
-	@Query("select 100.0 * count(u1)/(select count(u) from Usuario u) from Usuario u1 where u1.pedidosRestantes >0")
+	@Query("select 100.0 * count(u1)/(select count(u) from Usuario u where u.nombre!='Usuario' and u.apellidos!='Eliminado') from Usuario u1 where u1.pedidosRestantes >0 and u1.nombre!='Usuario' and u1.apellidos!='Eliminado'")
 	public Integer usuariosSuscritosVsNo();
 	
 	@Query("select p.supermercado.nombre from CestaProducto cp join cp.producto p group by p.supermercado order by count(p) desc")

@@ -1334,6 +1334,7 @@ export function PedidoForm() {
                     </a>
                   </div>
                   <div className="grid" id="paypal-b">
+                  <h1>Total: {precioTotal(values)}€</h1>
                     <h2>Elige tu método de pago 👇</h2>
 
                     <PayPalButton
