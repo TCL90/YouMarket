@@ -38,7 +38,6 @@ function Dashboard() {
 				<div>
 					<p>Media de cestas por usuario: {dashboardDatos[0]}</p>
 					<p>Número de usuarios totales: {dashboardDatos[1]}</p>
-					<p>Media  de pedidos por cliente: {dashboardDatos[2]}</p>
 					<p>Número de pedidos totales: {dashboardDatos[3]}</p>
 					<p>Número de pedidos última semana: {dashboardDatos[4]}</p>
 					<p>Número de usuarios que han realizado pedidos: {dashboardDatos[5]}</p>
