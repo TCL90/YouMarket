@@ -230,12 +230,12 @@ function DatosUsuario() {
             Eliminar cuenta
           </button>
         }
-
-        <a target="_blank">
+		{localStorage.getItem('adminCheck')==1 ?
+						(<div></div>):<div><a target="_blank">
           <button className="button-perfil button-finish" onClick={descarga}>
             Exportar información del usuario en PDF
           </button>
-        </a>
+        </a></div>}
       </div>
     </div>
   );
