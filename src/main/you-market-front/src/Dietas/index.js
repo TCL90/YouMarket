@@ -11,7 +11,7 @@ function Dietas() {
   const [dietas, setDietas] = useState([]);
 
   const fetchDietas = useCallback(() => {
-    return fetch("list", {
+    return fetch("https://youmarket-entrega5.herokuapp.com/list", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

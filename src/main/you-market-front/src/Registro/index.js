@@ -181,7 +181,7 @@ class RegistroUsuario extends React.Component {
                 "selectSuscripciones"
               ).value;
               setTimeout(() => {
-                fetch("../usuario/signUpAll", {
+                fetch("https://youmarket-entrega5.herokuapp.com/usuario/signUpAll", {
                   headers: {
                     "Content-Type": "application/json",
                   },

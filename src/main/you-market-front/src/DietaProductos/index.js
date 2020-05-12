@@ -10,7 +10,7 @@ function DietaProductos() {
   const { id } = useParams();
 
   const fetchDietaProductos = useCallback(() => {
-    return fetch(`../../../producto/dieta/list/${id}`, {
+    return fetch(`https://youmarket-entrega5.herokuapp.com/producto/dieta/list/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

@@ -9,7 +9,7 @@ function Facturas() {
   const [facturasSuscripcion, setFacturasSuscripcion] = useState([]);
 
   const fetchFacturasPedidos = useCallback(() => {
-    return fetch("factura/pedidosUser", {
+    return fetch("https://youmarket-entrega5.herokuapp.com/factura/pedidosUser", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -24,7 +24,7 @@ function Facturas() {
   }, []);
 
   const fetchFacturasSuscripcion = useCallback(() => {
-    return fetch("factura/suscripcionesUser", {
+    return fetch("https://youmarket-entrega5.herokuapp.com/factura/suscripcionesUser", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

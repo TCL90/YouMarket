@@ -11,7 +11,7 @@ function SuscripcionForm() {
   let history = useHistory();
 
   function dietasCheck() {
-    fetch("/usuario/dietasCheck", {
+    fetch("https://youmarket-entrega5.herokuapp.com/usuario/dietasCheck", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -55,7 +55,7 @@ function SuscripcionForm() {
                 "selectSuscripciones"
               ).value;
               setTimeout(() => {
-                fetch("usuario/updateSuscripcion", {
+                fetch("https://youmarket-entrega5.herokuapp.com/usuario/updateSuscripcion", {
                   headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",

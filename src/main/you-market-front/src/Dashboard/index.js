@@ -11,7 +11,7 @@ function Dashboard() {
 	const [dashboardDatos, setDashboardDatos] = useState([]);
 
 	const dashboard = useCallback(() => {
-		return fetch('dashboard' , {headers: {
+		return fetch('https://youmarket-entrega5.herokuapp.com/dashboard' , {headers: {
 		'Content-Type' : 'application/json',
 		'Accept' : 'application/json',
 		'Authorization' : 'Bearer ' + localStorage.getItem('auth')},
@@ -24,7 +24,7 @@ function Dashboard() {
 		useEffect(() => {
 			dashboard(dashboardDatos);
 			}, []);
-		
+
 		if(localStorage.getItem('adminCheck')==0){
 			history.push('/404');
 		}

@@ -10,7 +10,7 @@ function DatosUsuario() {
   let history = useHistory();
 
   const [usuario, setUsuario] = useState([]);
-  const urlPDF = "http://localhost:8081/usuario/exportPDF";
+  const urlPDF = "https://youmarket-entrega5.herokuapp.com/usuario/exportPDF";
   const [direccion, setDireccion] = useState([]);
   const [suscripcion, setSuscripcion] = useState([]);
   const [ultimaSuscripcion, setUltimaSuscripcion] = useState([]);

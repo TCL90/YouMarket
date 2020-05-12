@@ -15,7 +15,7 @@ function Cestas() {
   }
 
   const fetchCestas = useCallback(() => {
-    return fetch("cesta/user", {
+    return fetch("https://youmarket-entrega5.herokuapp.com/cesta/user", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -31,7 +31,7 @@ function Cestas() {
 
   useEffect(() => {
     fetchCestas(cestas);
-    fetch("/usuario/cestasCheck", {
+    fetch("https://youmarket-entrega5.herokuapp.com/usuario/cestasCheck", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

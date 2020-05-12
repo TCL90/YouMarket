@@ -10,7 +10,7 @@ function CestaProductos() {
   const { id } = useParams();
 
   const fetchCestaProductos = useCallback(() => {
-    return fetch(`/cesta/productos/dieta/list/${id}`)
+    return fetch(`https://youmarket-entrega5.herokuapp.com/cesta/productos/dieta/list/${id}`)
       .then((res) => res.json())
       .then((cestaproductos) => {
         setCestaproductos(cestaproductos);
