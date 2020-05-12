@@ -43,10 +43,14 @@ public class DashboardService {
 	
 	public Double avgCestasPerClient() {
 		Double res = null;
+		BigDecimal bd;
 		
 		res=this.dashboardRepository.avgCestasPerClient();
-		BigDecimal bd = new BigDecimal(res).setScale(2, RoundingMode.HALF_UP);
-
+		if(res!=null) {
+			bd = new BigDecimal(res).setScale(2, RoundingMode.HALF_UP);
+		} else {
+			bd = new BigDecimal(0.00).setScale(2, RoundingMode.HALF_UP);
+		}
 		return bd.doubleValue();
 		
 	}
@@ -219,8 +223,13 @@ public class DashboardService {
 		List<String> res = null;
 		
 		res=new ArrayList<>(this.dashboardRepository.superMasVentas());
-		
-		return res.get(0);
+		String result = "";
+		if(res.size()==0) {
+			result = "No hay supermercados que hayan vendido aún";
+		} else {
+			result = res.get(0);
+		}
+		return result;
 	}
 	
 	public String horaEnvioIniFrec() {
@@ -311,10 +320,14 @@ public class DashboardService {
 	
 	public Double avgGastoPerPedido() {
 		Double res = null;
-		
+		BigDecimal bd;
 		res=this.dashboardRepository.avgGastoPerPedido();
-
-		BigDecimal bd = new BigDecimal(res).setScale(2, RoundingMode.HALF_UP);
+		
+		if(res != null) {
+			bd = new BigDecimal(res).setScale(2, RoundingMode.HALF_UP);
+		}else {
+			bd = new BigDecimal(0.00).setScale(2, RoundingMode.HALF_UP);
+		}
 		
 		return bd.doubleValue();
 	}
