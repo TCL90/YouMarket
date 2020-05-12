@@ -18,7 +18,7 @@ public interface DashboardRepository extends JpaRepository<Usuario, Integer>{
 	@Query("select count(u) from Usuario u")
 	public Integer numUsuarios();
 	
-	@Query("select avg(1.0*(select count(f) from Factura f where f.usuario.id = u.id group by f.usuario)) from Usuario u")
+	@Query("select avg(1.0*(select count(f) from Factura f where f.usuario.id = u.id and f.pedido.id is null group by f.usuario)) from Usuario u")
 	public Double avgPedidosPerClient();
 	
 	@Query("select count(f) from Factura f where f.pedido is not null")
