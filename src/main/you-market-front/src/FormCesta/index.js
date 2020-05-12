@@ -52,6 +52,7 @@ class formCesta extends React.Component {
                 fetch("https://youmarket-entrega5.herokuapp.com/cesta", {
                   headers: {
                     "Content-Type": "application/json",
+                    'Authorization' : 'Bearer ' + localStorage.getItem('auth')
                   },
                   method: "POST",
                   body: JSON.stringify(values, null, 2),
