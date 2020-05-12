@@ -84,6 +84,7 @@ function copiarDir14() {
 }
 
 export function PedidoForm() {
+
   let history = useHistory();
 
   const [envioTomas, setEnvioTomas] = useState(localStorage.getItem("enviosD"));
@@ -102,7 +103,7 @@ export function PedidoForm() {
   const [precioTotalCestas, setPrecioTotalCestas] = useState(0.0);
 
   function totalDeCestas(values) {
-    fetch("https://youmarket-entrega5.herokuapp.com/precio/", {
+    fetch("https://youmarket-entrega5.herokuapp.com/pedido/precio/", {
       headers: {
         "Content-Type": "application/json",
 		 Authorization: "Bearer " + localStorage.getItem("auth"),
