@@ -9,15 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.youmarket.configuration.security.CurrentUser;
 import com.youmarket.configuration.security.UserPrincipal;
 import com.youmarket.domain.Cesta;
@@ -27,6 +18,15 @@ import com.youmarket.domain.ProductoCarrito;
 import com.youmarket.services.CestaProductoService;
 import com.youmarket.services.CestaService;
 import com.youmarket.services.ProductoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/")
@@ -41,15 +41,14 @@ public class CarritoSessionController {
 	@Autowired
 	CestaService cestaService;
 
-	public List<ProductoCarrito> listCarrito(Map<Producto, Integer> m){
-        List<ProductoCarrito> res = new ArrayList<>();
-        for(Producto p: m.keySet()){
-            ProductoCarrito pc = new ProductoCarrito(p, m.get(p));
-            res.add(pc);
-        }
-        return res;
-    }
-
+	public List<ProductoCarrito> listCarrito(Map<Producto, Integer> m) {
+		List<ProductoCarrito> res = new ArrayList<>();
+		for (Producto p : m.keySet()) {
+			ProductoCarrito pc = new ProductoCarrito(p, m.get(p));
+			res.add(pc);
+		}
+		return res;
+	}
 
 	@GetMapping("/carrito")
 	public ResponseEntity<List<ProductoCarrito>> carritoGet(HttpSession session){
@@ -60,7 +59,6 @@ public class CarritoSessionController {
 //		}
 		return null;
 	}
-
 
 	@PostMapping("/carrito")
 	public List<ProductoCarrito> carritoPost(@RequestBody Map<String,Integer> postProducto, HttpServletRequest request, HttpSession session){
@@ -85,11 +83,12 @@ public class CarritoSessionController {
 	}
 
 	@PostMapping("/eliminarProducto")
-	public List<ProductoCarrito> eliminarProducto(@RequestBody Map<String, Integer> postProducto, HttpServletRequest request, HttpSession session){
+	public List<ProductoCarrito> eliminarProducto(@RequestBody Map<String, Integer> postProducto,
+			HttpServletRequest request, HttpSession session) {
 		Producto p = this.productoService.findById(postProducto.get("postId"));
 		@SuppressWarnings("unchecked")
-		Map<Producto, Integer> carrito = (Map<Producto, Integer>)session.getAttribute("SESSION_CARRITO");
-		if (carrito.keySet().contains(p)){
+		Map<Producto, Integer> carrito = (Map<Producto, Integer>) session.getAttribute("SESSION_CARRITO");
+		if (carrito.keySet().contains(p)) {
 			carrito.remove(p);
 		} else {
 			return null;
@@ -105,39 +104,41 @@ public class CarritoSessionController {
 	}
 
 	@GetMapping("/cestaACarrito")
-	public List<ProductoCarrito> cestaACarrito(@RequestBody Map<String,String> postCesta){
+	public List<ProductoCarrito> cestaACarrito(@RequestBody Map<String, String> postCesta) {
 		List<CestaProducto> productos = this.cpService.cpPorCesta(Integer.valueOf(postCesta.get("id")));
-		
+
 		List<ProductoCarrito> res = new ArrayList<>();
-        for(CestaProducto p: productos){
-            ProductoCarrito pc = new ProductoCarrito(p.getProducto(), p.getCantidad());
-            res.add(pc);
-        }
-        return res;
+		for (CestaProducto p : productos) {
+			ProductoCarrito pc = new ProductoCarrito(p.getProducto(), p.getCantidad());
+			res.add(pc);
+		}
+		return res;
 	}
 
 	@Deprecated
 	@PostMapping("/carritoACesta")
-	public Cesta carritoACesta(@RequestBody Map<String,String> postCesta, HttpServletRequest request, HttpSession session, @CurrentUser UserPrincipal currentUser){
-		Cesta c = (Cesta)this.cestaService.findById(Integer.valueOf(postCesta.get("id")), currentUser);
+	public Cesta carritoACesta(@RequestBody Map<String, String> postCesta, HttpServletRequest request,
+			HttpSession session, @CurrentUser UserPrincipal currentUser) {
+		Cesta c = (Cesta) this.cestaService.findById(Integer.valueOf(postCesta.get("id")), currentUser);
 		@SuppressWarnings("unchecked")
-		Map<Producto, Integer> carrito = (Map<Producto, Integer>)session.getAttribute("SESSION_CARRITO");
+		Map<Producto, Integer> carrito = (Map<Producto, Integer>) session.getAttribute("SESSION_CARRITO");
 		List<Producto> keys = new ArrayList<>(carrito.keySet());
-		for(Producto prod : keys){
+		for (Producto prod : keys) {
 			CestaProducto cp = new CestaProducto();
 			cp.setProducto(prod);
 			cp.setCantidad(carrito.get(prod));
 			cp.setCesta(c);
 			cp.setId(prod, c);
 			this.cpService.save(cp);
-			
+
 		}
 		request.getSession().setAttribute("SESSION_CARRITO", carrito);
 		return c;
 	}
-	
+
 	@PostMapping("/carritoACesta/{idCesta}")
-	public Cesta carritoACesta(@RequestBody List<ProductoCarrito> prods, @PathVariable Integer idCesta, @CurrentUser UserPrincipal currentUser){
+	public Cesta carritoACesta(@RequestBody List<ProductoCarrito> prods, @PathVariable Integer idCesta,
+			@CurrentUser UserPrincipal currentUser) {
 		Cesta c = this.cestaService.findById(idCesta, currentUser);
 		this.cpService.deleteByCestaId(c.getId());
 		for (ProductoCarrito p : prods) {
@@ -148,24 +149,22 @@ public class CarritoSessionController {
 			cp.setId(p.getProducto(), c);
 			cpService.save(cp);
 		}
-		
+
 		return c;
 	}
 
 	@GetMapping("/precioTotalCarrito")
-	public Double precioTotal(@RequestBody Map<String, Object> putamierda){
-//		Double precio = 0.0;
-//		@SuppressWarnings("unchecked")
-//		Map<Producto, Integer> carrito = (Map<Producto, Integer>)prods;
-//		List<Producto> productos = new ArrayList<>(carrito.keySet());
-//		for(Producto p: productos){
-//			precio+= p.getPrecio() * carrito.get(p);
-//		}
-//		
-//		BigDecimal importeIVA =  new BigDecimal(precio);
+	public Double precioTotal(@RequestBody Map<String, Object> putamierda) {
+		// Double precio = 0.0;
+		// @SuppressWarnings("unchecked")
+		// Map<Producto, Integer> carrito = (Map<Producto, Integer>)prods;
+		// List<Producto> productos = new ArrayList<>(carrito.keySet());
+		// for(Producto p: productos){
+		// precio+= p.getPrecio() * carrito.get(p);
+		// }
+		//
+		// BigDecimal importeIVA = new BigDecimal(precio);
 		return 1.0;
 	}
-	
 
 }
-
